@@ -188,6 +188,36 @@ Route::get('/booking/{code}/confirmation', function (string $code) {
     ]);
 })->name('booking.confirmation');
 
+// --- CUSTOMER BOOKING LOOKUP ---
+Route::get('/booking/lookup', function () {
+    return view('booking.lookup');
+})->name('booking.lookup');
+
+Route::get('/booking/lookup/find', function () {
+    $code = request('code');
+    if (!$code) {
+        return redirect()->route('booking.lookup')->with('error', 'Masukkan kode reservasi.');
+    }
+
+    $reservation = Reservation::where('reservation_code', $code)
+        ->with(['guest', 'reservationDetails.room.roomType', 'payment'])
+        ->first();
+
+    if (!$reservation) {
+        return redirect()->route('booking.lookup')->with('error', 'Kode reservasi tidak ditemukan.');
+    }
+
+    $detail = $reservation->reservationDetails->first();
+    $nights = max(1, $reservation->check_in->diffInDays($reservation->check_out));
+
+    return view('booking.show', [
+        'reservation' => $reservation,
+        'roomType' => $detail->room->roomType,
+        'room' => $detail->room,
+        'nights' => $nights,
+    ]);
+})->name('booking.lookup.find');
+
 // --- ADMIN ROUTES ---
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');

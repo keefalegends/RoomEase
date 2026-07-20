@@ -15,7 +15,7 @@
             </a>
             <nav class="hidden items-center gap-9 text-sm font-medium text-[#526057] md:flex" aria-label="Main navigation">
                 <a class="transition hover:text-[#18221d]" href="#stays">Our stays</a>
-                <a class="transition hover:text-[#18221d]" href="#experience">The experience</a>
+                <a class="transition hover:text-[#18221d]" href="{{ route('booking.lookup') }}">Cek Reservasi</a>
                 <a class="transition hover:text-[#18221d]" href="#about">About us</a>
             </nav>
             <a href="{{ route('rooms.index') }}" class="rounded-full border border-[#d7ddd2] bg-white px-5 py-2.5 text-sm font-semibold transition hover:border-[#1d3b2a] hover:bg-[#1d3b2a] hover:text-white">Find a room</a>
