@@ -20,3 +20,16 @@ Route::get('/rooms/{room}', function (string $room) {
 
     return view('rooms.show', ['room' => $rooms[$room]]);
 })->name('rooms.show');
+
+Route::get('/rooms/{room}/booking', function (string $room) {
+    $bookings = [
+        'essential' => ['room' => 'essential', 'name' => 'The Essential', 'guests_label' => '1–2 guests', 'guests' => '1', 'bed' => 'King bed', 'price' => '850k', 'image' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=85'],
+        'garden' => ['room' => 'garden', 'name' => 'The Garden', 'guests_label' => '1–3 guests', 'guests' => '1', 'bed' => 'King bed', 'price' => '1.1jt', 'image' => 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=85'],
+        'garden-suite' => ['room' => 'garden-suite', 'name' => 'The Garden Suite', 'guests_label' => '1–4 guests', 'guests' => '1', 'bed' => 'King bed', 'price' => '1.25jt', 'image' => 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85'],
+        'corner-suite' => ['room' => 'corner-suite', 'name' => 'The Corner Suite', 'guests_label' => '1–4 guests', 'guests' => '1', 'bed' => 'King bed', 'price' => '1.5jt', 'image' => 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=85'],
+    ];
+
+    abort_unless(isset($bookings[$room]), 404);
+
+    return view('booking.create', ['booking' => $bookings[$room] + ['check_in' => '', 'check_out' => '']]);
+})->name('booking.create');
