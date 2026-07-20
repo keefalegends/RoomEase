@@ -4,6 +4,10 @@ use App\Models\Guest;
 use App\Models\Payment;
 use App\Models\Reservation;
 use App\Models\RoomType;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -181,3 +185,18 @@ Route::get('/booking/{code}/confirmation', function (string $code) {
         'nights' => $nights,
     ]);
 })->name('booking.confirmation');
+
+// --- ADMIN ROUTES ---
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+    Route::middleware(AdminMiddleware::class)->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
+        Route::get('/reservations/{reservation}', [AdminReservationController::class, 'show'])->name('reservations.show');
+        Route::patch('/reservations/{reservation}/status', [AdminReservationController::class, 'updateStatus'])->name('reservations.update-status');
+    });
+});
+
