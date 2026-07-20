@@ -7,6 +7,8 @@ use App\Models\RoomType;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\Admin\AdminRoomController;
+use App\Http\Controllers\Admin\AdminRoomTypeController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -197,6 +199,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
         Route::get('/reservations/{reservation}', [AdminReservationController::class, 'show'])->name('reservations.show');
         Route::patch('/reservations/{reservation}/status', [AdminReservationController::class, 'updateStatus'])->name('reservations.update-status');
+
+        Route::resource('room-types', AdminRoomTypeController::class)->except(['show']);
+        Route::resource('rooms', AdminRoomController::class)->except(['show']);
     });
 });
 

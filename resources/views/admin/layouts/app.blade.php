@@ -22,6 +22,8 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.dashboard') }}" class="rounded-full px-4 py-2 text-sm font-medium text-[#526057] hover:bg-[#f3f5f0]">Dashboard</a>
                     <a href="{{ route('admin.reservations.index') }}" class="rounded-full px-4 py-2 text-sm font-medium text-[#526057] hover:bg-[#f3f5f0]">Reservations</a>
+                    <a href="{{ route('admin.room-types.index') }}" class="rounded-full px-4 py-2 text-sm font-medium text-[#526057] hover:bg-[#f3f5f0]">Room Types</a>
+                    <a href="{{ route('admin.rooms.index') }}" class="rounded-full px-4 py-2 text-sm font-medium text-[#526057] hover:bg-[#f3f5f0]">Rooms</a>
                     <form action="{{ route('admin.logout') }}" method="post">
                         @csrf
                         <button type="submit" class="rounded-full bg-[#1d3b2a] px-5 py-2 text-sm font-semibold text-white hover:bg-[#31583f]">Logout</button>
@@ -33,6 +35,9 @@
         <main class="mx-auto max-w-7xl px-6 py-8 lg:px-10">
             @if (session('success'))
                 <div class="mb-6 rounded-2xl bg-green-50 px-5 py-4 text-sm text-green-800">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="mb-6 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-800">{{ session('error') }}</div>
             @endif
             @yield('content')
         </main>
