@@ -18,7 +18,7 @@
                 <a class="transition hover:text-[#18221d]" href="#experience">The experience</a>
                 <a class="transition hover:text-[#18221d]" href="#about">About us</a>
             </nav>
-            <a href="#search" class="rounded-full border border-[#d7ddd2] bg-white px-5 py-2.5 text-sm font-semibold transition hover:border-[#1d3b2a] hover:bg-[#1d3b2a] hover:text-white">Find a room</a>
+            <a href="{{ route('rooms.index') }}" class="rounded-full border border-[#d7ddd2] bg-white px-5 py-2.5 text-sm font-semibold transition hover:border-[#1d3b2a] hover:bg-[#1d3b2a] hover:text-white">Find a room</a>
         </header>
 
         <main>
@@ -27,7 +27,7 @@
                     <p class="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-[#77847a]"><span class="h-px w-8 bg-[#a7b69d]"></span> Hospitality, made simple</p>
                     <h1 class="max-w-lg text-5xl font-semibold leading-[0.98] tracking-[-0.07em] text-[#1d3b2a] sm:text-6xl lg:text-7xl">A better way to <span class="font-serif italic font-normal text-[#7c946a]">stay.</span></h1>
                     <p class="mt-7 max-w-md text-base leading-7 text-[#627067]">Find a place that feels like yours. Thoughtfully designed rooms, warm service, and an easy booking experience from start to finish.</p>
-                    <a href="#search" class="mt-9 inline-flex items-center gap-3 rounded-full bg-[#1d3b2a] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1d3b2a]/15 transition hover:-translate-y-0.5 hover:bg-[#31583f]">Explore rooms <span aria-hidden="true">↗</span></a>
+                    <a href="{{ route('rooms.index') }}" class="mt-9 inline-flex items-center gap-3 rounded-full bg-[#1d3b2a] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1d3b2a]/15 transition hover:-translate-y-0.5 hover:bg-[#31583f]">Explore rooms <span aria-hidden="true">↗</span></a>
                     <div class="mt-14 flex items-center gap-8 border-t border-[#dce2d8] pt-6 text-sm text-[#68766d]"><span><strong class="block text-xl font-semibold text-[#1d3b2a]">12+</strong> room styles</span><span><strong class="block text-xl font-semibold text-[#1d3b2a]">4.9/5</strong> guest rating</span></div>
                 </div>
                 <div class="relative min-h-[480px] overflow-hidden rounded-[2rem] bg-[#dce5d5] shadow-2xl shadow-[#1d3b2a]/10 lg:min-h-[610px]">
@@ -38,7 +38,7 @@
             </section>
 
             <section id="search" class="relative z-10 mx-auto -mt-3 max-w-5xl px-6 lg:px-10">
-                <form class="grid gap-3 rounded-2xl border border-[#e2e6df] bg-white p-3 shadow-xl shadow-[#1d3b2a]/10 md:grid-cols-[1.3fr_1fr_1fr_auto] md:items-center md:rounded-full md:p-2" action="#stays">
+                <form class="grid gap-3 rounded-2xl border border-[#e2e6df] bg-white p-3 shadow-xl shadow-[#1d3b2a]/10 md:grid-cols-[1.3fr_1fr_1fr_auto] md:items-center md:rounded-full md:p-2" action="{{ route('rooms.index') }}" method="get">
                     <label class="flex items-center gap-3 rounded-full px-4 py-2.5 text-left hover:bg-[#f5f7f2]"><span class="text-xl">⌖</span><span><small class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Location</small><span class="text-sm font-medium">RoomEase Hotel</span></span></label>
                     <label class="flex items-center gap-3 rounded-full px-4 py-2.5 text-left hover:bg-[#f5f7f2]"><span class="text-xl">↘</span><span><small class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Check in</small><span class="text-sm font-medium text-[#849087]">Add dates</span></span></label>
                     <label class="flex items-center gap-3 rounded-full px-4 py-2.5 text-left hover:bg-[#f5f7f2]"><span class="text-xl">↗</span><span><small class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Check out</small><span class="text-sm font-medium text-[#849087]">Add dates</span></span></label>
@@ -47,7 +47,7 @@
             </section>
 
             <section id="stays" class="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-                <div class="mb-10 flex items-end justify-between"><div><p class="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#7c946a]">Stay your way</p><h2 class="text-4xl font-semibold tracking-[-0.06em] text-[#1d3b2a]">Rooms with room to breathe.</h2></div><a href="#search" class="hidden text-sm font-semibold text-[#526057] underline decoration-[#a7b69d] underline-offset-8 md:block">View all rooms ↗</a></div>
+                <div class="mb-10 flex items-end justify-between"><div><p class="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#7c946a]">Stay your way</p><h2 class="text-4xl font-semibold tracking-[-0.06em] text-[#1d3b2a]">Rooms with room to breathe.</h2></div><a href="{{ route('rooms.index') }}" class="hidden text-sm font-semibold text-[#526057] underline decoration-[#a7b69d] underline-offset-8 md:block">View all rooms ↗</a></div>
                 <div class="grid gap-6 md:grid-cols-3">
                     <article class="group"><div class="mb-5 aspect-[4/3] overflow-hidden rounded-2xl bg-[#e2e9de]"><img class="h-full w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80" alt="Standard room"><span class="absolute"></span></div><div class="flex justify-between gap-3"><div><h3 class="text-xl font-semibold text-[#1d3b2a]">The Essential</h3><p class="mt-1 text-sm text-[#748078]">1–2 guests · King bed</p></div><p class="text-right text-sm"><strong class="block text-base text-[#1d3b2a]">Rp 850k</strong><span class="text-[#8a958c]">/ night</span></p></div></article>
                     <article class="group"><div class="mb-5 aspect-[4/3] overflow-hidden rounded-2xl bg-[#e2e9de]"><img class="h-full w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80" alt="Deluxe room"></div><div class="flex justify-between gap-3"><div><h3 class="text-xl font-semibold text-[#1d3b2a]">The Garden</h3><p class="mt-1 text-sm text-[#748078]">1–3 guests · King bed</p></div><p class="text-right text-sm"><strong class="block text-base text-[#1d3b2a]">Rp 1.1jt</strong><span class="text-[#8a958c]">/ night</span></p></div></article>
