@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminRoomController;
 use App\Http\Controllers\Admin\AdminRoomTypeController;
 use App\Http\Middleware\AdminMiddleware;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -217,6 +218,25 @@ Route::get('/booking/lookup/find', function () {
         'nights' => $nights,
     ]);
 })->name('booking.lookup.find');
+
+// --- INVOICE PDF ---
+Route::get('/booking/{code}/invoice', function (string $code) {
+    $reservation = Reservation::where('reservation_code', $code)
+        ->with(['guest', 'reservationDetails.room.roomType', 'payment'])
+        ->firstOrFail();
+
+    $detail = $reservation->reservationDetails->first();
+    $nights = max(1, $reservation->check_in->diffInDays($reservation->check_out));
+
+    $pdf = Pdf::loadView('booking.invoice-pdf', [
+        'reservation' => $reservation,
+        'roomType' => $detail->room->roomType,
+        'room' => $detail->room,
+        'nights' => $nights,
+    ])->setPaper('a4');
+
+    return $pdf->download("invoice-{$code}.pdf");
+})->name('booking.invoice');
 
 // --- ADMIN ROUTES ---
 Route::prefix('admin')->name('admin.')->group(function () {

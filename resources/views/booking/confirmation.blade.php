@@ -27,6 +27,9 @@
         </div>
         
         <a href="{{ route('rooms.index') }}" class="mt-10 rounded-full border border-[#d7ddd2] bg-white px-6 py-3 text-sm font-semibold transition hover:border-[#1d3b2a] hover:bg-[#1d3b2a] hover:text-white">Return to home</a>
+        <a href="{{ route('booking.invoice', $reservation->reservation_code) }}" class="mt-3 flex items-center gap-2 rounded-full bg-[#1d3b2a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#31583f]">
+            ↓ Download Invoice PDF
+        </a>
     </div>
 </body>
 </html>

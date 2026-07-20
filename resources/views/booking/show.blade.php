@@ -110,7 +110,12 @@
                             @if ($reservation->payment?->status === 'unpaid')
                                 <a href="{{ route('booking.payment', $reservation->reservation_code) }}" 
                                    class="mt-4 w-full text-center rounded-full bg-[#1d3b2a] py-3 text-sm font-semibold text-white hover:bg-[#31583f]">
-                                    Lakukan Pembayaran
+                                     Lakukan Pembayaran
+                                 </a>
+                            @else
+                                <a href="{{ route('booking.invoice', $reservation->reservation_code) }}" 
+                                   class="mt-4 w-full text-center rounded-full border border-[#d7ddd2] bg-white py-3 text-sm font-semibold text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#f7f7f2]">
+                                    ↓ Download Invoice PDF
                                 </a>
                             @endif
                         </div>
