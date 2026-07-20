@@ -32,7 +32,7 @@
             </div>
 
             <div class="grid gap-10 lg:grid-cols-[1fr_380px] lg:items-start">
-                <form class="rounded-3xl border border-[#e1e6de] bg-white p-5 shadow-xl shadow-[#1d3b2a]/5 sm:p-8" action="#" method="post">
+                <form class="rounded-3xl border border-[#e1e6de] bg-white p-5 shadow-xl shadow-[#1d3b2a]/5 sm:p-8" action="{{ route('booking.store', $booking['room']) }}" method="post">
                     @csrf
                     <input type="hidden" name="room" value="{{ $booking['room'] }}">
                     <section>
@@ -60,8 +60,14 @@
                 <aside class="rounded-3xl border border-[#e1e6de] bg-[#1d3b2a] p-5 text-white shadow-xl shadow-[#1d3b2a]/10 sm:p-6 lg:sticky lg:top-6">
                     <img class="aspect-[4/3] rounded-2xl object-cover" src="{{ $booking['image'] }}" alt="{{ $booking['name'] }}">
                     <div class="mt-5 flex items-start justify-between gap-4"><div><p class="text-xs font-bold uppercase tracking-[0.2em] text-[#d8f36b]">Selected room</p><h2 class="mt-2 text-2xl font-semibold tracking-[-0.04em]">{{ $booking['name'] }}</h2><p class="mt-1 text-sm text-[#bfd0c1]">{{ $booking['guests_label'] }} · {{ $booking['bed'] }}</p></div><p class="text-right text-sm"><strong class="block text-lg">Rp {{ $booking['price'] }}</strong><span class="text-[#bfd0c1]">/ night</span></p></div>
-                    <div class="mt-6 space-y-3 border-t border-white/15 pt-5 text-sm text-[#dce8dd]"><div class="flex justify-between"><span>Room rate</span><span>Rp {{ $booking['price'] }}</span></div><div class="flex justify-between"><span>Nights</span><span>1</span></div><div class="flex justify-between"><span>Service</span><span>Included</span></div></div>
-                    <div class="mt-5 flex justify-between border-t border-white/15 pt-5 text-base font-bold"><span>Estimated total</span><span>Rp {{ $booking['price'] }}</span></div>
+                    <div class="mt-6 space-y-3 border-t border-white/15 pt-5 text-sm text-[#dce8dd]">
+                        <div class="flex justify-between"><span>Room rate</span><span>Rp {{ $booking['price'] }}</span></div>
+                        <div class="flex justify-between"><span>Nights</span><span>{{ $booking['nights'] }}</span></div>
+                        <div class="flex justify-between"><span>Service</span><span>Included</span></div>
+                    </div>
+                    <div class="mt-5 flex justify-between border-t border-white/15 pt-5 text-base font-bold">
+                        <span>Estimated total</span><span>Rp {{ $booking['total_price'] }}</span>
+                    </div>
                 </aside>
             </div>
         </main>
