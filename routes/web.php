@@ -31,5 +31,11 @@ Route::get('/rooms/{room}/booking', function (string $room) {
 
     abort_unless(isset($bookings[$room]), 404);
 
-    return view('booking.create', ['booking' => $bookings[$room] + ['check_in' => '', 'check_out' => '']]);
+    $booking = $bookings[$room] + [
+        'check_in' => request('check_in', ''),
+        'check_out' => request('check_out', ''),
+        'guests' => preg_replace('/\D+/', '', (string) request('guests', '1')) ?: '1',
+    ];
+
+    return view('booking.create', ['booking' => $booking]);
 })->name('booking.create');
