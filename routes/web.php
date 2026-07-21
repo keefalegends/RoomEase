@@ -276,6 +276,9 @@ Route::get('/booking/{code}/invoice', function (string $code) {
     return $pdf->download("invoice-{$code}.pdf");
 })->name('booking.invoice');
 
+// --- AI CHAT ASSISTANT ---
+Route::post('/api/chat', [\App\Http\Controllers\ChatAssistantController::class, 'reply'])->name('chat.reply');
+
 // --- ADMIN ROUTES ---
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');

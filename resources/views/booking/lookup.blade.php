@@ -47,5 +47,6 @@
             <p>© {{ date('Y') }} RoomEase. Stay beautifully.</p>
         </footer>
     </div>
+    @include('components.chat-widget')
 </body>
 </html>

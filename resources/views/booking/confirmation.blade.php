@@ -31,5 +31,6 @@
             ↓ Download Invoice PDF
         </a>
     </div>
+    @include('components.chat-widget')
 </body>
 </html>

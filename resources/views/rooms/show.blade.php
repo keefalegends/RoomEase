@@ -68,5 +68,6 @@
 
         <footer class="mx-auto flex max-w-7xl flex-col gap-5 border-t border-[#dfe5dc] px-6 py-8 text-sm text-[#78847a] sm:flex-row sm:items-center sm:justify-between lg:px-10"><p>© {{ date('Y') }} RoomEase. Stay beautifully.</p><div class="flex gap-6"><a class="hover:text-[#1d3b2a]" href="#">Instagram</a><a class="hover:text-[#1d3b2a]" href="#">Contact</a><a class="hover:text-[#1d3b2a]" href="#">Privacy</a></div></footer>
     </div>
+    @include('components.chat-widget')
 </body>
 </html>
