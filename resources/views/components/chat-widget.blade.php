@@ -15,7 +15,7 @@
     </button>
 
     <!-- Chat Window Popup (Hidden by default) -->
-    <div id="chat-window" class="hidden absolute bottom-18 right-0 w-80 sm:w-96 overflow-hidden rounded-3xl border border-[#e5ebe0] bg-white shadow-2xl transition-all duration-300 transform scale-95 opacity-0 origin-bottom-right">
+    <div id="chat-window" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 max-h-[80vh] flex flex-col overflow-hidden rounded-3xl border border-[#e5ebe0] bg-white shadow-2xl transition-all duration-300 transform scale-95 opacity-0 origin-bottom-right">
         <!-- Header -->
         <div class="flex items-center justify-between bg-[#1d3b2a] px-5 py-4 text-white">
             <div class="flex items-center gap-3">
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Messages Container -->
-        <div id="chat-messages" class="h-80 overflow-y-auto bg-[#fbfbf9] p-5 space-y-4 text-sm scrollbar-thin">
+        <div id="chat-messages" class="h-72 max-h-[45vh] overflow-y-auto bg-[#fbfbf9] p-4 space-y-3.5 text-sm scrollbar-thin">
             <!-- Welcome Message -->
             <div class="flex items-start gap-2.5">
                 <div class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#e9efe5] text-xs font-bold text-[#1d3b2a]">🤖</div>
