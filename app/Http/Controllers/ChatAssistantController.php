@@ -100,8 +100,17 @@ class ChatAssistantController extends Controller
             ]);
         }
 
-        // 5. Keyword check: Fasilitas / Sarapan / Wifi / Parkir / Lokasi
-        if (Str::contains($lower, ['fasilitas', 'sarapan', 'breakfast', 'makan', 'wifi', 'internet', 'parkir', 'kolam', 'alamat', 'lokasi', 'tempat'])) {
+        // 5. Keyword check: Fasilitas / Sarapan / Wifi / Password / Parkir / Lokasi
+        if (Str::contains($lower, ['password', 'sandi', 'pass', 'wifi', 'wi-fi', 'internet', 'koneksi'])) {
+            return response()->json([
+                'reply' => "📶 **Informasi Wi-Fi Hotel:**\n\n"
+                    . "• **SSID / Nama Jaringan**: `RoomEase-Guest` (atau `RoomEase-Lounge`)\n"
+                    . "• **Password Wi-Fi**: `staybeautifully`\n\n"
+                    . "Koneksi internet berkecepatan tinggi gratis dan tersedia di seluruh area kamar maupun lobi hotel!"
+            ]);
+        }
+
+        if (Str::contains($lower, ['fasilitas', 'sarapan', 'breakfast', 'makan', 'parkir', 'kolam', 'alamat', 'lokasi', 'tempat'])) {
             return response()->json([
                 'reply' => "🌿 **Fasilitas Unggulan di RoomEase:**\n\n"
                     . "☕ **Morning Coffee & Breakfast**: Kopi segar dan sarapan lokal setiap pagi.\n"

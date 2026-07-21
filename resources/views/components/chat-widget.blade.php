@@ -49,9 +49,9 @@
         <!-- Quick Suggestions -->
         <div class="px-4 py-2.5 bg-[#f5f5f0] border-t border-[#e8ece3] flex flex-wrap gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none">
             <button onclick="sendQuickMessage('Halo')" class="rounded-full border border-[#d2dcd0] bg-white px-3 py-1 text-xs font-medium text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#e9efe5] transition duration-200">👋 Halo</button>
+            <button onclick="sendQuickMessage('Password wifi apa ya?')" class="rounded-full border border-[#d2dcd0] bg-white px-3 py-1 text-xs font-medium text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#e9efe5] transition duration-200">📶 Password Wi-Fi</button>
             <button onclick="sendQuickMessage('Kamar apa saja yang kosong?')" class="rounded-full border border-[#d2dcd0] bg-white px-3 py-1 text-xs font-medium text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#e9efe5] transition duration-200">🛏️ Kamar Ready</button>
             <button onclick="sendQuickMessage('Jam berapa check in?')" class="rounded-full border border-[#d2dcd0] bg-white px-3 py-1 text-xs font-medium text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#e9efe5] transition duration-200">⏰ Jam Check-in</button>
-            <button onclick="sendQuickMessage('Fasilitas hotel apa aja?')" class="rounded-full border border-[#d2dcd0] bg-white px-3 py-1 text-xs font-medium text-[#1d3b2a] hover:border-[#1d3b2a] hover:bg-[#e9efe5] transition duration-200">☕ Fasilitas</button>
         </div>
 
         <!-- Form Input -->
