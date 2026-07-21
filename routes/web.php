@@ -19,16 +19,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/rooms', function () {
+// --- Dynamic Helper for matching slug to RoomType ---
+function findRoomType(string $slug): ?RoomType
+{
     $slugMap = [
         'essential' => 'The Essential',
         'garden' => 'The Garden',
         'garden-suite' => 'The Garden Suite',
         'corner-suite' => 'The Corner Suite',
     ];
+
+    if (isset($slugMap[$slug])) {
+        $rt = RoomType::where('name', $slugMap[$slug])->first();
+        if ($rt) return $rt;
+
+        // Fallback: search by prefix (handles "The Essential-s", etc.)
+        $rtLike = RoomType::where('name', 'like', $slugMap[$slug] . '%')->first();
+        if ($rtLike) return $rtLike;
+    }
+
+    return RoomType::all()->first(function ($type) use ($slug) {
+        return Str::slug($type->name) === $slug;
+    });
+}
+
+Route::get('/rooms', function () {
+    $slugs = ['essential', 'garden', 'garden-suite', 'corner-suite'];
     $availability = [];
-    foreach ($slugMap as $slug => $name) {
-        $rt = RoomType::where('name', $name)->first();
+
+    foreach ($slugs as $slug) {
+        $rt = findRoomType($slug);
         $availability[$slug] = $rt ? $rt->rooms()->where('status', 'available')->count() : 0;
     }
     return view('rooms.index', compact('availability'));
@@ -44,7 +64,7 @@ Route::get('/rooms/{room}', function (string $room) {
 
     abort_unless(isset($rooms[$room]), 404);
 
-    $roomType = RoomType::where('name', $rooms[$room]['name'])->first();
+    $roomType = findRoomType($room);
     $availableCount = $roomType ? $roomType->rooms()->where('status', 'available')->count() : 0;
 
     $rooms[$room]['slug'] = $room;
@@ -53,20 +73,8 @@ Route::get('/rooms/{room}', function (string $room) {
     return view('rooms.show', ['room' => $rooms[$room]]);
 })->name('rooms.show');
 
-// --- Slug-to-RoomType name map (used by booking routes) ---
-function roomSlugToName(string $slug): string
-{
-    return match ($slug) {
-        'essential' => 'The Essential',
-        'garden' => 'The Garden',
-        'garden-suite' => 'The Garden Suite',
-        'corner-suite' => 'The Corner Suite',
-        default => abort(404),
-    };
-}
-
 Route::get('/rooms/{room}/booking', function (string $room) {
-    $roomType = RoomType::where('name', roomSlugToName($room))->firstOrFail();
+    $roomType = findRoomType($room) ?? abort(404);
     $availableCount = $roomType->rooms()->where('status', 'available')->count();
 
     if ($availableCount === 0) {
@@ -120,7 +128,7 @@ Route::post('/rooms/{room}/booking', function (string $room) {
         'guests' => 'required|integer|min:1|max:10',
     ]);
 
-    $roomType = RoomType::where('name', roomSlugToName($room))->firstOrFail();
+    $roomType = findRoomType($room) ?? abort(404);
     $availableRoom = $roomType->rooms()->where('status', 'available')->first();
 
     if (!$availableRoom) {
