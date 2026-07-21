@@ -45,6 +45,16 @@
                         </div>
                     </section>
 
+                    @if ($errors->any())
+                        <div class="mt-6 rounded-2xl bg-red-50 p-4 text-sm text-red-600">
+                            <ul class="list-inside list-disc">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <section class="mt-10 border-t border-[#e5ebe2] pt-8">
                         <h2 class="text-2xl font-semibold tracking-[-0.04em] text-[#1d3b2a]">Stay details</h2>
                         <div class="mt-6 grid gap-4 sm:grid-cols-3">
