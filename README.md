@@ -2,8 +2,6 @@
 
 RoomEase adalah aplikasi reservasi hotel berbasis web yang dirancang minimalis, elegan, dan efisien. Aplikasi ini dibangun menggunakan Laravel 13, Blade templating untuk antarmuka pengguna, Tailwind CSS sebagai styling system, MySQL sebagai pengelola database lokal (via Laragon), dan dilengkapi **Smart AI Customer Service Assistant (EaseBot)** untuk melayani pertanyaan tamu secara instan.
 
-Project ini didevelop sebagai bagian dari program latihan magang (PKL) di **Desnet** untuk merancang sistem reservasi hotel yang lengkap baik dari sisi tamu (customer-facing) maupun pengelola hotel (admin-facing).
-
 ---
 
 ## 🚀 Fitur Utama
