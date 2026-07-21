@@ -19,7 +19,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/rooms', 'rooms.index')->name('rooms.index');
+Route::get('/rooms', function () {
+    $slugMap = [
+        'essential' => 'The Essential',
+        'garden' => 'The Garden',
+        'garden-suite' => 'The Garden Suite',
+        'corner-suite' => 'The Corner Suite',
+    ];
+    $availability = [];
+    foreach ($slugMap as $slug => $name) {
+        $rt = RoomType::where('name', $name)->first();
+        $availability[$slug] = $rt ? $rt->rooms()->where('status', 'available')->count() : 0;
+    }
+    return view('rooms.index', compact('availability'));
+})->name('rooms.index');
 
 Route::get('/rooms/{room}', function (string $room) {
     $rooms = [
@@ -30,6 +43,12 @@ Route::get('/rooms/{room}', function (string $room) {
     ];
 
     abort_unless(isset($rooms[$room]), 404);
+
+    $roomType = RoomType::where('name', $rooms[$room]['name'])->first();
+    $availableCount = $roomType ? $roomType->rooms()->where('status', 'available')->count() : 0;
+
+    $rooms[$room]['slug'] = $room;
+    $rooms[$room]['available_count'] = $availableCount;
 
     return view('rooms.show', ['room' => $rooms[$room]]);
 })->name('rooms.show');
@@ -48,6 +67,12 @@ function roomSlugToName(string $slug): string
 
 Route::get('/rooms/{room}/booking', function (string $room) {
     $roomType = RoomType::where('name', roomSlugToName($room))->firstOrFail();
+    $availableCount = $roomType->rooms()->where('status', 'available')->count();
+
+    if ($availableCount === 0) {
+        return redirect()->route('rooms.show', $room)
+            ->with('error', 'Maaf, semua kamar tipe ' . $roomType->name . ' sedang tidak tersedia. Silakan pilih tipe kamar lain.');
+    }
 
     $checkInStr = request('check_in');
     $checkOutStr = request('check_out');
@@ -96,7 +121,12 @@ Route::post('/rooms/{room}/booking', function (string $room) {
     ]);
 
     $roomType = RoomType::where('name', roomSlugToName($room))->firstOrFail();
-    $availableRoom = $roomType->rooms()->where('status', 'available')->firstOrFail();
+    $availableRoom = $roomType->rooms()->where('status', 'available')->first();
+
+    if (!$availableRoom) {
+        return redirect()->route('rooms.show', $room)
+            ->with('error', 'Maaf, semua kamar tipe ' . $roomType->name . ' sedang penuh. Silakan pilih tipe kamar lain.');
+    }
 
     $nights = max(1, (new DateTime($data['check_in']))->diff(new DateTime($data['check_out']))->days);
     $totalPrice = $roomType->price_per_night * $nights;

@@ -27,7 +27,7 @@
                 <div>
                     <div class="relative overflow-hidden rounded-[2rem] bg-[#dce5d5]">
                         <img class="aspect-[4/3] h-full w-full object-cover" src="{{ $room['image'] }}" alt="{{ $room['name'] }}">
-                        <span class="absolute left-5 top-5 rounded-full bg-white/90 px-4 py-2 text-xs font-bold text-[#1d3b2a] shadow-sm backdrop-blur-sm">Available now</span>
+                        <span class="absolute left-5 top-5 rounded-full {{ ($room['available_count'] ?? 0) > 0 ? 'bg-white/90 text-[#1d3b2a]' : 'bg-red-500/90 text-white' }} px-4 py-2 text-xs font-bold shadow-sm backdrop-blur-sm">{{ ($room['available_count'] ?? 0) > 0 ? ($room['available_count'] . ' kamar tersedia') : 'Sold out' }}</span>
                     </div>
                     <div class="mt-8 grid grid-cols-3 gap-3">
                         @foreach ([$room['image'], 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=500&q=80'] as $image)
@@ -43,11 +43,22 @@
                     <div class="mt-8 flex flex-wrap gap-3 text-sm text-[#526057]"><span class="rounded-full bg-[#e9efe5] px-4 py-2">{{ $room['guests'] }}</span><span class="rounded-full bg-[#e9efe5] px-4 py-2">{{ $room['bed'] }}</span><span class="rounded-full bg-[#e9efe5] px-4 py-2">Wi-Fi included</span></div>
 
                     <form class="mt-10 rounded-2xl border border-[#e1e6de] bg-white p-5 shadow-xl shadow-[#1d3b2a]/5" action="{{ route('booking.create', $room['slug'] ?? request()->route('room')) }}" method="get">
+                        @if (session('error'))
+                            <div class="mb-5 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600">{{ session('error') }}</div>
+                        @endif
                         <div class="mb-5 flex items-end justify-between"><div><p class="text-xs font-bold uppercase tracking-[0.2em] text-[#849087]">Reserve this room</p><p class="mt-2 text-sm text-[#68766d]">Choose your dates to see the total.</p></div><p class="text-right"><strong class="block text-xl text-[#1d3b2a]">Rp {{ $room['price'] }}</strong><span class="text-xs text-[#8a958c]">per night</span></p></div>
+                        @if (($room['available_count'] ?? 0) > 0)
                         <div class="grid gap-3 sm:grid-cols-2"><label class="rounded-xl border border-[#dfe5dc] px-4 py-3"><span class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Check in</span><input class="mt-1 w-full bg-transparent text-sm font-medium outline-none" type="date" name="check_in" required></label><label class="rounded-xl border border-[#dfe5dc] px-4 py-3"><span class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Check out</span><input class="mt-1 w-full bg-transparent text-sm font-medium outline-none" type="date" name="check_out" required></label></div>
                         <label class="mt-3 block rounded-xl border border-[#dfe5dc] px-4 py-3"><span class="block text-[10px] font-bold uppercase tracking-widest text-[#849087]">Guests</span><select class="mt-1 w-full bg-transparent text-sm font-medium outline-none" name="guests"><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></label>
                         <button class="mt-4 w-full rounded-full bg-[#1d3b2a] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#31583f]" type="submit">Reserve this room <span class="ml-1">↗</span></button>
                         <p class="mt-3 text-center text-xs text-[#849087]">You won't be charged yet.</p>
+                        @else
+                        <div class="rounded-xl bg-[#f5f0f0] px-5 py-6 text-center">
+                            <p class="text-lg font-semibold text-[#1d3b2a]">Kamar tidak tersedia</p>
+                            <p class="mt-2 text-sm text-[#68766d]">Semua kamar tipe ini sedang terisi. Silakan cek tipe kamar lain.</p>
+                            <a href="{{ route('rooms.index') }}" class="mt-4 inline-block rounded-full bg-[#1d3b2a] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#31583f]">Lihat kamar lain</a>
+                        </div>
+                        @endif
                     </form>
                 </div>
             </div>

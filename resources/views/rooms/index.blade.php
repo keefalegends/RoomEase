@@ -29,7 +29,7 @@
                         <h1 class="max-w-2xl text-5xl font-semibold leading-[0.98] tracking-[-0.07em] text-[#1d3b2a] sm:text-6xl">A room for every <span class="font-serif italic font-normal text-[#7c946a]">kind</span> of stay.</h1>
                         <p class="mt-5 max-w-lg text-base leading-7 text-[#68766d]">Take your pick from our thoughtfully designed rooms. Every stay comes with warm service and a little more space to slow down.</p>
                     </div>
-                    <p class="text-sm text-[#849087]"><strong class="text-[#1d3b2a]">3 rooms</strong> available for your dates</p>
+                    <p class="text-sm text-[#849087]"><strong class="text-[#1d3b2a]">{{ collect($availability)->sum() }} kamar</strong> tersedia saat ini</p>
                 </div>
             </section>
 
@@ -65,7 +65,7 @@
                     @endphp
                     @foreach ($rooms as $room)
                         <article class="group">
-                            <a href="{{ route('rooms.show', $room['slug']) }}" class="relative mb-5 block aspect-[4/3] overflow-hidden rounded-2xl bg-[#e2e9de]"><img class="h-full w-full object-cover transition duration-500 group-hover:scale-105" src="{{ $room['image'] }}" alt="{{ $room['name'] }}"><span class="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1.5 text-xs font-semibold text-[#1d3b2a] backdrop-blur-sm">Available</span></a>
+                            <a href="{{ route('rooms.show', $room['slug']) }}" class="relative mb-5 block aspect-[4/3] overflow-hidden rounded-2xl bg-[#e2e9de]"><img class="h-full w-full object-cover transition duration-500 group-hover:scale-105" src="{{ $room['image'] }}" alt="{{ $room['name'] }}"><span class="absolute left-4 top-4 rounded-full {{ ($availability[$room['slug']] ?? 0) > 0 ? 'bg-white/85 text-[#1d3b2a]' : 'bg-red-500/85 text-white' }} px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">{{ ($availability[$room['slug']] ?? 0) > 0 ? (($availability[$room['slug']]) . ' tersedia') : 'Sold out' }}</span></a>
                             <div class="flex justify-between gap-4"><div><h2 class="text-xl font-semibold tracking-[-0.03em] text-[#1d3b2a]">{{ $room['name'] }}</h2><p class="mt-1 text-sm text-[#748078]">{{ $room['description'] }}</p><p class="mt-3 text-xs text-[#849087]">{{ $room['guests'] }} <span class="mx-1">·</span> {{ $room['bed'] }} <span class="mx-1">·</span> Wi-Fi</p></div><p class="shrink-0 text-right text-sm"><strong class="block text-base text-[#1d3b2a]">Rp {{ $room['price'] }}</strong><span class="text-[#8a958c]">/ night</span></p></div>
                         </article>
                     @endforeach
